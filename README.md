@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1 align="center" style="position: relative;">
   <br>
     <img src="./assets/shoppy-x-ray.svg" alt="logo" width="200">
@@ -158,3 +159,6 @@ Visit our [CONTRIBUTING.md](./CONTRIBUTING.md) for a detailed overview of our pr
 ## License
 
 Skeleton Theme is open-sourced under the [MIT](./LICENSE.md) License.
+=======
+# unaisa-custom-theme
+>>>>>>> 46a6206b1d2d3c681d2a67c05af39cfc0d635c8d
