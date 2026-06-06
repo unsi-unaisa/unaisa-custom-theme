@@ -1,0 +1,380 @@
+{%- style -%}
+  /* Fix 1: Full-width container background matrix */
+  .custom-footer-{{ section.id }} {
+    background-color: {{ section.settings.footer_bg | default: '#ffffff' }} !important;
+    color: {{ section.settings.footer_text_color | default: '#111111' }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    width: 100% !important;
+    display: block;
+    clear: both;
+  }
+
+  /* Fix 2: Content centering inner block layered architecture */
+  .footer-container-{{ section.id }} {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto !important;
+    padding: 0 40px !important;
+    box-sizing: border-box;
+  }
+
+  /* Main Columns layout adjustments */
+  .footer-top-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 50px;
+    width: 100%;
+  }
+
+  .footer-column-item {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .footer-column-item.newsletter-block-style {
+    flex: 1.8;
+    min-width: 320px;
+  }
+
+  .footer-column-item h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0 0 25px 0;
+    letter-spacing: 0.8px;
+    color: {{ section.settings.footer_title_color | default: '#111111' }};
+  }
+
+  .footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-links-list li {
+    margin-bottom: 12px;
+  }
+
+  .footer-links-list a {
+    color: {{ section.settings.footer_text_color | default: '#666666' }};
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+
+  .footer-links-list a:hover {
+    color: #000000;
+    padding-left: 4px;
+  }
+
+  .footer-info-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: {{ section.settings.footer_text_color | default: '#666666' }};
+    margin: 0 0 20px 0;
+  }
+
+  /* Premium Full Width Newsletter Grid Row */
+  .footer-newsletter-form {
+    display: flex;
+    gap: 10px;
+    max-width: 100%;
+    margin-top: 15px;
+  }
+
+  .footer-newsletter-input {
+    flex: 1;
+    padding: 13px 15px;
+    border: 1px solid #000000;
+    background: #ffffff;
+    color: #000000;
+    font-size: 0.9rem;
+    border-radius: 0px;
+    outline: none;
+  }
+
+  .footer-newsletter-btn {
+    padding: 0 30px;
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .footer-newsletter-btn:hover {
+    background: #333333;
+  }
+
+  /* Bottom Segment Row */
+  .footer-bottom-bar {
+    border-top: 1px solid {{ section.settings.border_color | default: '#e5e5e5' }};
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .footer-copyright {
+    font-size: 0.85rem;
+    color: #888888;
+    margin: 0;
+  }
+
+  .footer-payment-gateways {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .footer-payment-gateways svg, .footer-payment-gateways img {
+    height: 22px;
+    width: auto;
+  }
+
+  @media (max-width: 768px) {
+    .footer-top-grid {
+      flex-direction: column;
+      gap: 35px;
+    }
+    .footer-bottom-bar {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+{%- endstyle -%}
+
+<footer class="custom-footer-{{ section.id }}">
+  <div class="footer-container-{{ section.id }}">
+    
+    <div class="footer-top-grid">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          
+          {% when 'link_list' %}
+            <div class="footer-column-item" {{ block.shopify_attributes }}>
+              <h3>{{ block.settings.heading | escape }}</h3>
+              {%- assign footer_menu = linklists[block.settings.menu] -%}
+              {% if footer_menu != blank %}
+                <ul class="footer-links-list">
+                  {% for link in footer_menu.links %}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+
+          {% when 'about_info' %}
+            <div class="footer-column-item" {{ block.shopify_attributes }}>
+              <h3>{{ block.settings.heading | escape }}</h3>
+              {% if block.settings.text != blank %}
+                <div class="footer-info-text">{{ block.settings.text }}</div>
+              {% endif %}
+            </div>
+
+          {% when 'newsletter' %}
+            <div class="footer-column-item newsletter-block-style" {{ block.shopify_attributes }}>
+              <h3>{{ block.settings.heading | escape }}</h3>
+              {% if block.settings.subtext != blank %}
+                <p class="footer-info-text">{{ block.settings.subtext | escape }}</p>
+              {% endif %}
+              
+              {% form 'customer', class: 'footer-newsletter-form' %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <input 
+                  type="email" 
+                  name="contact[email]" 
+                  class="footer-newsletter-input" 
+                  placeholder="Your email address..." 
+                  required
+                >
+                <button type="submit" class="footer-newsletter-btn">
+                  Subscribe
+                </button>
+              {% endform %}
+            </div>
+
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    <div class="footer-bottom-bar">
+      <div class="footer-copyright">
+        <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.copyright_text }}</p>
+      </div>
+
+      {% if section.settings.show_payment_icons %}
+        <div class="footer-payment-gateways">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag: class: 'payment-icon-svg' }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "GenZ Premium Footer",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sizing Parameters"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1100,
+      "max": 1600,
+      "step": 50,
+      "label": "Footer Row Width (px)",
+      "default": 1350
+    },
+    {
+      "type": "header",
+      "content": "Color Schemes"
+    },
+    {
+      "type": "color",
+      "id": "footer_bg",
+      "label": "Footer Outer Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "footer_title_color",
+      "label": "Column Title Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "footer_text_color",
+      "label": "Links & Paragraph Color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Bottom Border Divider Line",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Bar Content"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Custom Copyright Message",
+      "default": "All Rights Reserved."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show Legal Payment Gateways Icons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Outer Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 4,
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Navigation Links Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Column Title",
+          "default": "Shop Categories"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Select Shopify Menu"
+        }
+      ]
+    },
+    {
+      "type": "about_info",
+      "name": "Brand About Text Box",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Column Title",
+          "default": "Our Corporate Hub"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Info Paragraph content",
+          "default": "<p>Premium electronics dealer supplying top-tier interactive displays, minimalist kitchen components, and durable tech accessories globally.</p>"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter Box Block",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Column Title",
+          "default": "Sign Up For Our Newsletter"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext Info Line",
+          "default": "Receive our latest updates about our products & promotions."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GenZ Premium Footer",
+      "blocks": [
+        { "type": "about_info", "settings": { "heading": "Our Location" } },
+        { "type": "link_list", "settings": { "heading": "Shop Links" } },
+        { "type": "link_list", "settings": { "heading": "Customer Service" } },
+        { "type": "newsletter", "settings": { "heading": "SIGN UP FOR OUR NEWSLETTER" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

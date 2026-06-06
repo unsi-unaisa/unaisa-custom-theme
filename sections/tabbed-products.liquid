@@ -1,0 +1,149 @@
+<section class="tabbed-products-section {% if section.settings.full_width %}full-width{% endif %}" style="--animation-speed: {{ section.settings.anim_speed }}s;">
+  <div class="tabbed-container">
+    
+    <div class="tab-header">
+      <button class="tab-btn active" data-tab="tab-one">
+        {{ section.settings.tab_one_title | default: 'Tab 1' }}
+      </button>
+      <button class="tab-btn" data-tab="tab-two">
+        {{ section.settings.tab_two_title | default: 'Tab 2' }}
+      </button>
+    </div>
+
+    <div id="tab-one" class="tab-content active">
+      <div class="product-grid" style="grid-template-columns: repeat({{ section.settings.grid_desktop }}, minmax(200px, 1fr));">
+        {%- assign collection_one = section.settings.collection_one -%}
+        {%- for product in collections[collection_one].products limit: section.settings.products_limit -%}
+          <div class="product-card">
+            <div class="product-image-wrapper">
+              <img src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" alt="{{ product.title }}">
+            </div>
+            <div class="product-info">
+              <h3>{{ product.title }}</h3>
+              <p class="product-price">{{ product.price | money }}</p>
+              <a href="{{ product.url }}" class="btn-view-product">{{ section.settings.btn_text }}</a>
+            </div>
+          </div>
+        {%- else -%}
+          <p class="no-products-msg">Please select a collection for Tab 1 in the sidebar settings.</p>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div id="tab-two" class="tab-content">
+      <div class="product-grid" style="grid-template-columns: repeat({{ section.settings.grid_desktop }}, minmax(200px, 1fr));">
+        {%- assign collection_two = section.settings.collection_two -%}
+        {%- for product in collections[collection_two].products limit: section.settings.products_limit -%}
+          <div class="product-card">
+            <div class="product-image-wrapper">
+              <img src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" alt="{{ product.title }}">
+            </div>
+            <div class="product-info">
+              <h3>{{ product.title }}</h3>
+              <p class="product-price">{{ product.price | money }}</p>
+              <a href="{{ product.url }}" class="btn-view-product">{{ section.settings.btn_text }}</a>
+            </div>
+          </div>
+        {%- else -%}
+          <p class="no-products-msg">Please select a collection for Tab 2 in the sidebar settings.</p>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tabbed Product Grid",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Enable Full Width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Total Products to Show",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "grid_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Products per row",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "tab_one_title",
+      "label": "Tab 1 Title",
+      "default": "All Gadgets"
+    },
+    {
+      "type": "collection",
+      "id": "collection_one",
+      "label": "Collection for Tab 1"
+    },
+    {
+      "type": "text",
+      "id": "tab_two_title",
+      "label": "Tab 2 Title",
+      "default": "Featured"
+    },
+    {
+      "type": "collection",
+      "id": "collection_two",
+      "label": "Collection for Tab 2"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "View Device"
+    },
+    {
+      "type": "range",
+      "id": "anim_speed",
+      "min": 0.2,
+      "max": 1.5,
+      "step": 0.1,
+      "label": "Animation Speed",
+      "default": 0.5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tabbed Product Grid"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const tabs = document.querySelectorAll(".tab-btn");
+    const contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", function() {
+        tabs.forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+
+        contents.forEach(c => c.classList.remove("active"));
+        const targetId = this.getAttribute("data-tab");
+        const targetContent = document.getElementById(targetId);
+        if(targetContent) {
+          targetContent.classList.add("active");
+        }
+      });
+    });
+  });
+</script>

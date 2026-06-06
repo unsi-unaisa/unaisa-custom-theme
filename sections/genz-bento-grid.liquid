@@ -1,0 +1,355 @@
+{%- style -%}
+  /* Dynamic Layout Variables */
+  .genz-bento-section-{{ section.id }} {
+    padding: 60px 0;
+    background-color: {{ section.settings.bg_color | default: '#ffffff' }};
+    color: {{ section.settings.text_color | default: '#1d1d1f' }};
+  }
+
+  .bento-container-{{ section.id }} {
+    {% if section.settings.layout_style == 'full_width' %}
+      max-width: 100%;
+      padding-left: 40px;
+      padding-right: 40px;
+    {% else %}
+      max-width: {{ section.settings.container_width }}px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    {% endif %}
+  }
+
+  .bento-title-block {
+    margin-bottom: 40px;
+  }
+
+  .cyber-badge {
+    font-family: monospace;
+    font-size: 0.8rem;
+    background: {{ section.settings.text_color | default: '#1d1d1f' }};
+    color: {{ section.settings.bg_color | default: '#ffffff' }};
+    padding: 6px 12px;
+    border-radius: 4px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .bento-title-block h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    margin-top: 15px;
+    color: {{ section.settings.text_color | default: '#1d1d1f' }};
+  }
+
+  /* Grid Layout Setup with Dynamic Card Row Height */
+  .bento-grid-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: {{ section.settings.card_row_height }}px;
+    gap: 24px;
+  }
+
+  /* Universal Bento Card Base */
+  .bento-universal-card {
+    border: 1px solid rgba(128, 128, 128, 0.15);
+    border-radius: 24px;
+    padding: 35px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .bento-universal-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Structural Card Matrix Rules */
+  .card-layout-main { grid-column: span 2; grid-row: span 2; flex-direction: row; }
+  .card-layout-text-glow { justify-content: center; grid-column: span 1; grid-row: span 1; }
+  .card-layout-vertical { grid-column: span 1; grid-row: span 2; }
+  .card-layout-horizontal { grid-column: span 2; grid-row: span 1; flex-direction: row; }
+
+  /* Inner Content Layouts */
+  .card-tag {
+    font-family: monospace;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .bento-universal-card h3 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 5px 0 12px 0;
+  }
+
+  .card-desc {
+    font-size: 1rem;
+    opacity: 0.7;
+    max-width: 300px;
+    line-height: 1.5;
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, #0071e3, #ff007f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.6rem !important;
+    font-weight: 900;
+  }
+
+  .bento-link {
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 15px;
+    display: inline-block;
+    color: inherit;
+  }
+
+  .bento-image-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    height: 100%;
+  }
+
+  .bento-image-wrapper img, .bento-placeholder {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 900px) {
+    .bento-container-{{ section.id }} { padding-left: 20px; padding-right: 20px; }
+    .bento-grid-matrix { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 16px; }
+    .card-layout-main, .card-layout-horizontal { flex-direction: column; }
+    .card-layout-main, .card-layout-horizontal, .card-layout-vertical { grid-column: span 1; grid-row: span 1; }
+  }
+{%- endstyle -%}
+
+<section class="genz-bento-section-{{ section.id }}">
+  <div class="bento-container-{{ section.id }}">
+    
+    <div class="bento-title-block">
+      {% if section.settings.badge_text != blank %}
+        <span class="cyber-badge">{{ section.settings.badge_text }}</span>
+      {% endif %}
+      <h2>{{ section.settings.section_title }}</h2>
+    </div>
+
+    <div class="bento-grid-matrix">
+      {% for block in section.blocks %}
+        
+        {%- assign modulo_calc = forloop.index | modulo: 4 -%}
+        
+        {%- case modulo_calc -%}
+          {%- when 1 -%}
+            {%- assign current_layout = 'main' -%}
+          {%- when 2 -%}
+            {%- assign current_layout = 'text-glow' -%}
+          {%- when 3 -%}
+            {%- assign current_layout = 'vertical' -%}
+          {%- when 0 -%}
+            {%- assign current_layout = 'horizontal' -%}
+        {%- endcase -%}
+        
+        {% comment %} Each block gets its own custom colors from the editor {% endcomment %}
+        <div class="bento-universal-card card-layout-{{ current_layout }}" 
+             style="background-color: {{ block.settings.card_bg_color | default: 'rgba(128,128,128,0.05)' }}; color: {{ block.settings.card_text_color | default: '#1d1d1f' }}; border-color: {{ block.settings.card_text_color | cubic_bezier | replace: '#', 'rgba(' | append: ',0.15)' }};"
+             {{ block.shopify_attributes }}>
+          
+          <div class="bento-content">
+            {% if block.settings.card_tag != blank %}
+              <span class="card-tag">{{ block.settings.card_tag }}</span>
+            {% endif %}
+            
+            {% if block.settings.card_title != blank %}
+              <h3 class="{% if current_layout == 'text-glow' and block.settings.card_bg_color == 'rgba(128,128,128,0.05)' %}gradient-text{% endif %}">
+                {{ block.settings.card_title }}
+              </h3>
+            {% endif %}
+            
+            {% if block.settings.card_subtext != blank %}
+              <p class="card-desc">{{ block.settings.card_subtext }}</p>
+            {% endif %}
+            
+            {% if block.settings.card_link_text != blank and block.settings.card_link_url != blank %}
+              <a href="{{ block.settings.card_link_url }}" class="bento-link">{{ block.settings.card_link_text }} →</a>
+            {% endif %}
+          </div>
+
+          {% if current_layout != 'text-glow' %}
+            <div class="bento-image-wrapper">
+              {% if block.settings.card_image != blank %}
+                <img src="{{ block.settings.card_image | img_url: '600x600' }}" alt="{{ block.settings.card_title }}">
+              {% else %}
+                {{ 'product-apparel-1' | placeholder_svg_tag: 'bento-placeholder' }}
+              {% endif %}
+            </div>
+          {% endif %}
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GenZ Bento Grid",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Rules"
+    },
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Section Width Style",
+      "options": [
+        { "value": "container", "label": "Fixed Container Box" },
+        { "value": "full_width", "label": "Full Screen Width" }
+      ],
+      "default": "container"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1600,
+      "step": 50,
+      "label": "Container Max Width (If Boxed)",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "card_row_height",
+      "min": 250,
+      "max": 450,
+      "step": 10,
+      "label": "Bento Grid Row Height (px)",
+      "default": 320
+    },
+    {
+      "type": "header",
+      "content": "Global Section Colours"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Section Main Text",
+      "default": "#1d1d1f"
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Top Badge Label",
+      "default": "DROP 01 // LIVE"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Main Title",
+      "default": "FUTURE // APPARATUS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bento_card",
+      "name": "Bento Card Item",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Card Custom Styling"
+        },
+        {
+          "type": "color",
+          "id": "card_bg_color",
+          "label": "Card Background Color",
+          "default": "#f5f5f7"
+        },
+        {
+          "type": "color",
+          "id": "card_text_color",
+          "label": "Card Text Color",
+          "default": "#1d1d1f"
+        },
+        {
+          "type": "header",
+          "content": "Card Data Content"
+        },
+        {
+          "type": "text",
+          "id": "card_tag",
+          "label": "Small Tag",
+          "default": "FLAGSHIP"
+        },
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Title",
+          "default": "Lumina Cyber Watch"
+        },
+        {
+          "type": "textarea",
+          "id": "card_subtext",
+          "label": "Subtext / Description",
+          "default": "The matrix on your wrist. Hyper-monitored."
+        },
+        {
+          "type": "text",
+          "id": "card_link_text",
+          "label": "Link Text",
+          "default": "Explore"
+        },
+        {
+          "type": "url",
+          "id": "card_link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Upload Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GenZ Bento Grid",
+      "blocks": [
+        { "type": "bento_card", "settings": { "card_title": "Lumina Cyber Watch", "card_tag": "FLAGSHIP", "card_bg_color": "#1d1d1f", "card_text_color": "#ffffff" } },
+        { "type": "bento_card", "settings": { "card_title": "\"Chaos under control.\"", "card_tag": "PHILOSOPHY", "card_bg_color": "#e3e3e5", "card_text_color": "#1d1d1f" } },
+        { "type": "bento_card", "settings": { "card_title": "Zest Pods Pro X", "card_tag": "AUDIO", "card_bg_color": "#ffffff", "card_text_color": "#1d1d1f" } },
+        { "type": "bento_card", "settings": { "card_title": "Volt Charger", "card_tag": "ECOSYSTEM", "card_bg_color": "#0071e3", "card_text_color": "#ffffff" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

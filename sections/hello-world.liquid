@@ -1,0 +1,53 @@
+<section class="hero-banner" style="{% if section.settings.bg_image %}background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ section.settings.bg_image | img_url: 'master' }}'); background-size: cover; background-position: center; color: #ffffff;{% endif %}">
+  <div class="hero-container">
+    <h1>{{ section.settings.heading }}</h1>
+    <p>{{ section.settings.subheading }}</p>
+    <button class="btn-premium" id="theme-toggle">Switch Mode 🌓</button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Premium Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Future of Tech is Here"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Experience the premium collection of smart gadgets crafted for perfection."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Optional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Hero Banner"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtn = document.getElementById("theme-toggle");
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function() {
+        if (document.documentElement.getAttribute("data-theme") === "dark") {
+          document.documentElement.removeAttribute("data-theme");
+        } else {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      });
+    }
+  });
+</script>
+

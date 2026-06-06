@@ -1,0 +1,344 @@
+{%- style -%}
+  .contact-page-{{ section.id }} {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 60px auto;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .contact-page-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 50px;
+    color: #111111;
+  }
+
+  /* Two Column Split Grid Layout */
+  .contact-grid-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  /* Left Side Form Styling */
+  .contact-form-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #111111;
+  }
+
+  .contact-form-subtext {
+    font-size: 0.9rem;
+    color: #666666;
+    margin: 0 0 30px 0;
+  }
+
+  .genz-contact-native-form .form-field-block {
+    margin-bottom: 20px;
+  }
+
+  .genz-contact-native-form label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #111111;
+  }
+
+  .genz-contact-native-form label .required-star {
+    color: #ff0000;
+    margin-left: 3px;
+  }
+
+  .genz-contact-native-form input[type="text"],
+  .genz-contact-native-form input[type="email"],
+  .genz-contact-native-form input[type="tel"],
+  .genz-contact-native-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #dcdcdc;
+    background: #ffffff;
+    font-size: 0.92rem;
+    color: #111111;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 0px;
+    transition: border-color 0.2s ease;
+  }
+
+  .genz-contact-native-form input:focus,
+  .genz-contact-native-form textarea:focus {
+    border-color: #111111;
+  }
+
+  .contact-submit-action-btn {
+    background: #111111;
+    color: #ffffff;
+    padding: 14px 35px;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 0px;
+    transition: background 0.2s ease;
+    margin-top: 10px;
+  }
+
+  .contact-submit-action-btn:hover {
+    background: #333333;
+  }
+
+  /* Right Side Sidebar Styling */
+  .contact-info-sidebar {
+    background-color: {{ section.settings.sidebar_bg_color | default: '#f8f8f8' }};
+    padding: 40px;
+    box-sizing: border-box;
+  }
+
+  .sidebar-info-block {
+    margin-bottom: 30px;
+  }
+
+  .sidebar-info-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .sidebar-info-block h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    color: #111111;
+  }
+
+  .sidebar-info-block p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #444444;
+    margin: 0 0 8px 0;
+  }
+
+  .sidebar-action-live-btn {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #111111;
+    color: #111111;
+    background: #ffffff;
+    padding: 13px 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-action-live-btn:hover {
+    background: #111111;
+    color: #ffffff;
+  }
+
+  .info-meta-row {
+    display: flex;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #111111;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid-layout {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .contact-info-sidebar {
+      padding: 30px 20px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="contact-page-{{ section.id }}">
+  
+  <h1 class="contact-page-title">{{ page.title | default: "Get In Touch" }}</h1>
+
+  <div class="contact-grid-layout">
+    
+    <div class="contact-left-form-zone">
+      <h3 class="contact-form-heading">{{ section.settings.form_title }}</h3>
+      <p class="contact-form-subtext">{{ section.settings.form_subtext }}</p>
+
+      {% form 'contact', class: 'genz-contact-native-form' %}
+        {% if form.posted_successfully? %}
+          <p style="color: green; font-weight: 600; margin-bottom: 20px;">
+            Thank you for contacting us! We will get back to you shortly.
+          </p>
+        {% endif %}
+
+        {% if form.errors %}
+          <p style="color: red; margin-bottom: 20px;">
+            Please clear errors and try again.
+          </p>
+        {% endif %}
+
+        <div class="form-field-block">
+          <label for="ContactFormName">Name</label>
+          <input type="text" id="ContactFormName" name="contact[name]" autocomplete="name" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+        </div>
+
+        <div class="form-field-block">
+          <label for="ContactFormPhone">Phone Number</label>
+          <input type="tel" id="ContactFormPhone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+        </div>
+
+        <div class="form-field-block">
+          <label for="ContactFormEmail">Email <span class="required-star">*</span></label>
+          <input type="email" id="ContactFormEmail" name="contact[email]" spellcheck="false" autocomplete="email" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+        </div>
+
+        <div class="form-field-block">
+          <label for="ContactFormMessage">Comment <span class="required-star">*</span></label>
+          <textarea rows="8" id="ContactFormMessage" name="contact[body]" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+        </div>
+
+        <button type="submit" class="contact-submit-action-btn">
+          Submit Contact
+        </button>
+      {% endform %}
+    </div>
+
+    <div class="contact-info-sidebar">
+      
+      {% if section.settings.show_chat_button %}
+        <div class="sidebar-info-block">
+          <h4>Live Help</h4>
+          <p>{{ section.settings.chat_subtext }}</p>
+          <a href="{{ section.settings.chat_url | default: '#' }}" class="sidebar-action-live-btn">Message Us</a>
+        </div>
+      {% endif %}
+
+      <div class="sidebar-info-block" style="border-top: 1px solid #e5e5e5; padding-top: 25px;">
+        {% if section.settings.phone_text != blank %}
+          <div class="info-meta-row">
+            <strong>TEXT:</strong> <span>{{ section.settings.phone_text }}</span>
+          </div>
+        {% endif %}
+        
+        {% if section.settings.email_text != blank %}
+          <div class="info-meta-row">
+            <strong>EMAIL:</strong> <span>{{ section.settings.email_text }}</span>
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.address_text != blank %}
+        <div class="sidebar-info-block">
+          <p>{{ section.settings.address_text }}</p>
+        </div>
+      {% endif %}
+
+      {% if section.settings.hours_text != blank %}
+        <div class="sidebar-info-block">
+          <h4>Opening Hours:</h4>
+          <div style="font-size: 0.9rem; color: #444444; line-height: 1.6;">
+            {{ section.settings.hours_text }}
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "GenZ Custom Contact Page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1000,
+      "max": 1400,
+      "step": 50,
+      "label": "Page Container Width (px)",
+      "default": 1200
+    },
+    {
+      "type": "color",
+      "id": "sidebar_bg_color",
+      "label": "Sidebar Box Background Color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "header",
+      "content": "Left Form Settings"
+    },
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form Heading Text",
+      "default": "Send us an email"
+    },
+    {
+      "type": "text",
+      "id": "form_subtext",
+      "label": "Form Subheading Text",
+      "default": "Ask us anything! We're here to help."
+    },
+    {
+      "type": "header",
+      "content": "Right Sidebar Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_chat_button",
+      "label": "Show Live Help Component",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "chat_subtext",
+      "label": "Live Help Info Line",
+      "default": "If you have an issue or question that requires immediate assistance, you can click the button below to chat live with a Customer Service representative."
+    },
+    {
+      "type": "url",
+      "id": "chat_url",
+      "label": "Live Help Button Link Destination"
+    },
+    {
+      "type": "text",
+      "id": "phone_text",
+      "label": "Store Phone Line",
+      "default": "091-123-ELLA"
+    },
+    {
+      "type": "text",
+      "id": "email_text",
+      "label": "Store Contact Email",
+      "default": "email@domain.com"
+    },
+    {
+      "type": "richtext",
+      "id": "address_text",
+      "label": "Store Physical Location",
+      "default": "<p>685 Market Street<br>San Francisco, CA 94105,<br>United States</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "hours_text",
+      "label": "Store Operating Hours",
+      "default": "<p>MON TO SAT: 9:00AM - 10:00PM<br>SUN: 10:00AM - 6:00PM</p>"
+    }
+  ]
+}
+{% endschema %}

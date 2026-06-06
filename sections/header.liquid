@@ -1,0 +1,254 @@
+<style>
+  .custom-sense-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 3rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .header__logo-img {
+    display: block;
+    height: auto;
+  }
+  .header a {
+    text-decoration: none;
+    color: #000000;
+  }
+
+  /* Inline Menu & Dropdown */
+  .sense-menu-list {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+  }
+  .sense-menu-item {
+    position: relative;
+  }
+  .sense-menu-link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+  .sense-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #ffffff;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    list-style: none;
+    padding: 15px;
+    min-width: 180px;
+    display: none;
+    z-index: 100;
+    border: 1px solid #eaeaea;
+  }
+  .sense-menu-item:hover .sense-dropdown {
+    display: block;
+  }
+
+  /* Inline Search Bar */
+  .header__inline-search {
+    margin: 0 1.5rem;
+    flex-grow: 0.5;
+  }
+  .inline-search-form {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    background: #f9f9f9;
+  }
+  .inline-search-form input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    padding: 5px;
+    outline: none;
+  }
+
+  /* Right Side Utilities Zone */
+  .header__utilities-zone {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* Localization Form Styling */
+  .inline-localization-form {
+    display: flex;
+    gap: 10px;
+  }
+  .inline-localization-form select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .header__icons-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .header__icons-group svg {
+    width: 22px;
+    height: 22px;
+  }
+  .inline-cart-link {
+    position: relative;
+  }
+  .inline-cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: #000;
+    color: #fff;
+    font-size: 0.65rem;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+</style>
+
+<header class="custom-sense-header">
+  
+  <div class="header__logo-area">
+    {%- if section.settings.logo != blank -%}
+      <a href="{{ routes.root_url }}">
+        {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
+        {{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag: class: 'header__logo-img', alt: logo_alt }}
+      </a>
+    {%- else -%}
+      <h2 style="margin:0;"><a href="{{ routes.root_url }}">{{ shop.name }}</a></h2>
+    {%- endif -%}
+  </div>
+
+  <nav class="header__navigation-area">
+    <ul class="sense-menu-list">
+      {%- for link in section.settings.menu.links -%}
+        <li class="sense-menu-item">
+          <a href="{{ link.url }}" class="sense-menu-link">
+            {{ link.title }}
+            {% if link.links != blank %}<span style="font-size:0.6rem; margin-left:5px;">▼</span>{% endif %}
+          </a>
+          {%- if link.links != blank -%}
+            <ul class="sense-dropdown">
+              {%- for childlink in link.links -%}
+                <li><a href="{{ childlink.url }}" style="padding: 5px 0; display:block;">{{ childlink.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+
+  <div class="header__inline-search">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="inline-search-form">
+      <input type="text" name="q" placeholder="Search products..." value="{{ search.terms | escape }}">
+      <button type="submit" style="background:none; border:none; cursor:pointer;">🔍</button>
+    </form>
+  </div>
+
+  <div class="header__utilities-zone">
+    
+    {%- form 'localization', id: 'HeaderLocalizationForm', class: 'inline-localization-form' -%}
+      
+      {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+        <noscript>
+          <button type="submit" class="button button--secondary">{{ 'localization.update_country' | t }}</button>
+        </noscript>
+        <select name="country_code" onchange="this.form.submit()">
+          {%- for country in localization.available_countries -%}
+            <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code %} selected{% endif %}>
+              {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+            </option>
+          {%- endfor -%}
+        </select>
+      {%- endif -% gold %}
+
+      {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+        <noscript>
+          <button type="submit" class="button button--secondary">{{ 'localization.update_language' | t }}</button>
+        </noscript>
+        <select name="locale_code" onchange="this.form.submit()">
+          {%- for language in localization.available_languages -%}
+            <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}" {%- if language.iso_code == localization.language.iso_code %} selected{% endif %}>
+              {{ language.endonym_name | capitalize }}
+            </option>
+          {%- endfor -%}
+        </select>
+      {%- endif -%}
+      
+    {%- endform -%}
+
+    <div class="header__icons-group">
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}">
+          {{ 'icon-account.svg' | inline_asset_content }}
+        </a>
+      {%- endif -%}
+
+      <a href="{{ routes.cart_url }}" class="inline-cart-link">
+        {{ 'icon-cart.svg' | inline_asset_content }}
+        {%- if cart != empty -%}
+          <span class="inline-cart-badge">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Custom Sense Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Store Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo Width",
+      "default": 100
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "Enable Country/Region Selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "Enable Language Selector"
+    }
+  ]
+}
+{% endschema %}
+

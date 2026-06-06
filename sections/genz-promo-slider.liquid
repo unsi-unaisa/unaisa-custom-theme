@@ -1,0 +1,404 @@
+{%- style -%}
+  .promo-slider-section-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+    background-color: {{ section.settings.bg_color | default: '#ffffff' }};
+  }
+
+  .promo-slider-container-{{ section.id }} {
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .promo-slider-grid-{{ section.id }} {
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  /* Left Promo Banner Block Architecture */
+  .left-promo-banner-{{ section.id }} {
+    flex: 0 0 {{ section.settings.banner_width }}%;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+    min-height: 480px;
+  }
+
+  .promo-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  .promo-content-layer {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .promo-content-top h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    color: #000000;
+  }
+
+  .promo-content-top p {
+    font-size: 1rem;
+    color: #555555;
+    margin: 0;
+  }
+
+  .promo-btn {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 12px 30px;
+    border: 2px solid #000000;
+    background: transparent;
+    color: #000000;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
+
+  .promo-btn:hover {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  /* Right Side Product Grid Wrapper */
+  .right-product-slider-{{ section.id }} {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* Custom Clean Product Card Architecture */
+  .custom-product-card {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #000000;
+    position: relative;
+  }
+
+  /* Core Hover Image Engine (The requested feature) */
+  .product-card-media {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+
+  .product-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .product-card-media .secondary-img {
+    opacity: 0;
+    z-index: 2;
+  }
+
+  .product-card-media .primary-img {
+    z-index: 1;
+  }
+
+  /* Trigger Second Image Transition on Card Hover */
+  .custom-product-card:hover .secondary-img {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
+  .custom-product-card:hover .primary-img {
+    opacity: 0;
+  }
+
+  /* Product Meta Typography Layout */
+  .product-card-vendor {
+    font-size: 0.8rem;
+    color: #888888;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .product-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+    height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .product-card-price-row {
+    margin-top: auto;
+    margin-bottom: 15px;
+  }
+
+  .product-card-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ff0000; /* Matching typical Ella sale highlights */
+  }
+
+  .product-card-compare {
+    font-size: 0.9rem;
+    text-decoration: line-through;
+    color: #999999;
+    margin-left: 8px;
+  }
+
+  /* Modern Quick Add Action button styling */
+  .quick-add-action-btn {
+    width: 100%;
+    background: transparent;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .custom-product-card:hover .quick-add-action-btn {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  /* Mobile Responsive adjustments */
+  @media (max-width: 991px) {
+    .promo-slider-grid-{{ section.id }} {
+      flex-direction: column;
+    }
+    .left-promo-banner-{{ section.id }} {
+      flex: 1 0 100%;
+      min-height: 300px;
+    }
+    .right-product-slider-{{ section.id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 576px) {
+    .right-product-slider-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+  }
+{%- endstyle -%}
+
+<section class="promo-slider-section-{{ section.id }}">
+  <div class="promo-slider-container-{{ section.id }}">
+    <div class="promo-slider-grid-{{ section.id }}">
+      
+      <div class="left-promo-banner-{{ section.id }}">
+        {% if section.settings.banner_img != blank %}
+          <img class="promo-bg-img" src="{{ section.settings.banner_img | img_url: '600x800' }}" alt="Promo Background" loading="lazy">
+        {% endif %}
+        
+        <div class="promo-content-layer">
+          <div class="promo-content-top">
+            <h3>{{ section.settings.banner_title | escape }}</h3>
+            <p>{{ section.settings.banner_subtext | escape }}</p>
+          </div>
+          
+          {% if section.settings.banner_btn_label != blank %}
+            <a href="{{ section.settings.banner_link | default: '#' }}" class="promo-btn">
+              {{ section.settings.banner_btn_label | escape }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="right-product-slider-{{ section.id }}">
+        {%- assign collection_ref = collections[section.settings.product_collection] -%}
+        
+        {% for product in collection_ref.products limit: 3 %}
+          <a href="{{ product.url }}" class="custom-product-card">
+            
+            <div class="product-card-media">
+              {% if product.featured_image != blank %}
+                <img class="primary-img" src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" alt="{{ product.title | escape }}" loading="lazy">
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag }}
+              {% endif %}
+
+              {% if product.images.size > 1 %}
+                <img class="secondary-img" src="{{ product.images[1] | img_url: '400x400', crop: 'center' }}" alt="{{ product.title | escape }}" loading="lazy">
+              {% else %}
+                <img class="secondary-img" src="{{ product.featured_image | img_url: '400x400', crop: 'center' }}" alt="{{ product.title | escape }}" loading="lazy">
+              {% endif %}
+            </div>
+
+            <div class="product-card-vendor">{{ product.vendor }}</div>
+            <h4 class="product-card-title">{{ product.title }}</h4>
+            
+            <div class="product-card-price-row">
+              <span class="product-card-price">{{ product.price | money }}</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="product-card-compare">{{ product.compare_at_price | money }}</span>
+              {% endif %}
+            </div>
+
+            <div class="quick-add-action-btn">
+              QUICK ADD
+            </div>
+          </a>
+        {% else %}
+          {% comment %} Onboarding Dummy Layout if collection empty {% endcomment %}
+          {% for i in (1..3) %}
+            <div class="custom-product-card">
+              <div class="product-card-media">
+                {{ 'product-' | append: i | placeholder_svg_tag }}
+              </div>
+              <div class="product-card-vendor">Brand Vendor</div>
+              <h4 class="product-card-title">Sample Electronics Catalog Item #{{ i }}</h4>
+              <div class="product-card-price-row">
+                <span class="product-card-price">$49.00</span>
+              </div>
+              <div class="quick-add-action-btn">QUICK ADD</div>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GenZ Promo Slider Grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Architecture"
+    },
+   {
+      "type": "range",
+      "id": "container_width",
+      "min": 1100,
+      "max": 1600,
+      "step": 50,
+      "label": "Container Width (px)",
+      "default": 1350
+    },
+    {
+      "type": "range",
+      "id": "banner_width",
+      "min": 25,
+      "max": 45,
+      "step": 5,
+      "label": "Left Banner Column Width (%)",
+      "default": 35
+    },
+    {
+      "type": "header",
+      "content": "Left Promo Banner Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_img",
+      "label": "Banner Background Image"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Banner Title",
+      "default": "Milancelos"
+    },
+    {
+      "type": "text",
+      "id": "banner_subtext",
+      "label": "Banner Subtext",
+      "default": "Huge Saving on Home Appliances"
+    },
+    {
+      "type": "text",
+      "id": "banner_btn_label",
+      "label": "Button Label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "banner_link",
+      "label": "Button Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Right Side Products"
+    },
+    {
+      "type": "collection",
+      "id": "product_collection",
+      "label": "Select Collection for Carousel"
+    },
+    {
+      "type": "header",
+      "content": "Styling & Padding Layout"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Outer Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "GenZ Promo Slider Grid"
+    }
+  ]
+}
+{% endschema %}

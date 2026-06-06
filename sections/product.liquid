@@ -1,0 +1,85 @@
+<section class="premium-product-section">
+  <div class="product-wrapper">
+    
+    <div class="product-media-gallery">
+      <div class="main-image-holder">
+        <img id="main-product-image" src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.title }}">
+      </div>
+    </div>
+
+    <div class="product-details-configurator">
+      <span class="brand-tag">LUMINA PREMIUM</span>
+      <h1>{{ product.title }}</h1>
+      <p class="product-price-display" id="dynamic-price">{{ product.price | money }}</p>
+      
+      <hr class="divider">
+
+      <div class="config-group">
+        <h3>Select Finish (Color)</h3>
+        <div class="variant-swatches">
+          {% for variant in product.variants %}
+            <button 
+              class="swatch-btn {% if forloop.first %}active{% endif %}" 
+              data-variant-id="{{ variant.id }}"
+              data-variant-price="{{ variant.price | money }}"
+              data-variant-image="{% if variant.image %}{{ variant.image | img_url: '600x600' }}{% else %}{{ product.featured_image | img_url: '600x600' }}{% endif %}"
+            >
+              {{ variant.title }}
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% form 'product', product, id: "premium-cart-form" %}
+        <input type="hidden" name="id" id="selected-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+        
+        <div class="purchase-actions">
+          <button type="submit" name="add" class="btn-add-to-cart-premium">
+            Add to Workspace ⚡
+          </button>
+        </div>
+      {% endform %}
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Premium Product Page",
+  "settings": []
+}
+{% endschema %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const swatches = document.querySelectorAll(".swatch-btn");
+    const mainImage = document.getElementById("main-product-image");
+    const priceDisplay = document.getElementById("dynamic-price");
+    const hiddenInput = document.getElementById("selected-variant-id");
+
+    swatches.forEach(swatch => {
+      swatch.addEventListener("click", function() {
+        // Active class മാറ്റുക
+        swatches.forEach(s => s.classList.remove("active"));
+        this.classList.add("active");
+
+        // പുതിയ ഡാറ്റകൾ എടുക്കുക
+        const newImg = this.getAttribute("data-variant-image");
+        const newPrice = this.getAttribute("data-variant-price");
+        const variantId = this.getAttribute("data-variant-id");
+
+        // സ്മൂത്ത് അനിമേഷനോടെ ഇമേജും പ്രൈസും മാറ്റുക
+        mainImage.style.opacity = 0;
+        setTimeout(() => {
+          mainImage.src = newImg;
+          mainImage.style.opacity = 1;
+        }, 200);
+
+        priceDisplay.innerText = newPrice;
+        hiddenInput.value = variantId;
+      });
+    });
+  });
+</script>

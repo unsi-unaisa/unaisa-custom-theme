@@ -1,0 +1,272 @@
+{%- style -%}
+  @keyframes genzGradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .promo-banner-{{ section.id }} {
+    width: 100%;
+    height: {{ section.settings.banner_height }}px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(-45deg, #ff0055, #00ffcc, #9900ff, #ff007f);
+    background-size: 400% 400%;
+    animation: genzGradientMove {{ section.settings.animation_speed }}s ease infinite;
+    padding: 0 40px;
+  }
+
+  .banner-bg-overlay-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: {{ section.settings.image_opacity | divided_by: 100.0 }};
+    mix-blend-mode: overlay;
+    z-index: 1;
+  }
+
+  .banner-content-{{ section.id }} {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .banner-tag-{{ section.id }} {
+    display: inline-block;
+    padding: 8px 18px;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
+
+  .banner-content-{{ section.id }} h2 {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: {{ section.settings.heading_size }}rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    line-height: 0.95;
+    margin: 0 0 20px 0;
+    color: #ffffff;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .banner-content-{{ section.id }} p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 35px 0;
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  /* --- Base Button System --- */
+  .banner-btn-{{ section.id }} {
+    display: inline-block;
+    padding: 16px 45px;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  /* Style 1: Solid Premium Black/White Button */
+  .btn-style-solid {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #ffffff;
+  }
+  .btn-style-solid:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #000000;
+  }
+
+  /* Style 2: Transparent Neon Outline Button */
+  .btn-style-outline {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
+  .btn-style-outline:hover {
+    background-color: #ffffff;
+    color: #000000;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(255,255,255,0.2);
+  }
+
+  /* Style 3: Luxury Double Border / Offset Style */
+  .btn-style-double {
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 4px #000000, 0 0 0 6px #ffffff;
+    margin: 6px; /* Prevents double border overlapping text spacing */
+  }
+  .btn-style-double:hover {
+    background-color: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px #000000;
+    transform: scale(1.02);
+  }
+{%- endstyle -%}
+
+<section class="promo-banner-{{ section.id }}">
+  
+  {% if section.settings.image != blank %}
+    <img class="banner-bg-overlay-img" src="{{ section.settings.image | img_url: '1800x' }}" alt="Banner Graphic Mesh">
+  {% endif %}
+
+  <div class="banner-content-{{ section.id }}">
+    {% if section.settings.tag_text != blank %}
+      <span class="banner-tag-{{ section.id }}">{{ section.settings.tag_text }}</span>
+    {% endif %}
+
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% if section.settings.subtext != blank %}
+      <p>{{ section.settings.subtext }}</p>
+    {% endif %}
+
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link | default: '#' }}" class="banner-btn-{{ section.id }} btn-style-{{ section.settings.btn_style }}">
+        {{ section.settings.button_label }}
+      </a>
+    {% endif %}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "GenZ Neon Promo Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color Change Animation Setup"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "label": "Color Cycle Speed (Seconds)",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "banner_height",
+      "min": 400,
+      "max": 800,
+      "step": 20,
+      "label": "Desktop Banner Height (px)",
+      "default": 640
+    },
+    {
+      "type": "header",
+      "content": "Banner Material & Overlay"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Overlay Pattern / Product Image"
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "label": "Image Blend Opacity",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Button Layout & Architecture"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Action Button Text",
+      "default": "GET ACCESS NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Action Link"
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Select Button Styling Matrix",
+      "options": [
+        { "value": "solid", "label": "⚡ Solid Black/White Shift" },
+        { "value": "outline", "label": "✨ Transparent Neon Outline" },
+        { "value": "double", "label": "👑 Luxury Double Border Offset" }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "header",
+      "content": "Typography Content"
+    },
+    {
+      "type": "text",
+      "id": "tag_text",
+      "label": "Mini Tag Text",
+      "default": "DROP 02 // LAUNCHING"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main Big Heading",
+      "default": "NEW ARRIVALS UNLOCKED"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 3,
+      "max": 7,
+      "step": 0.5,
+      "label": "Heading Font Size (rem)",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Description Paragraph",
+      "default": "Step into the next layer of street apparel architecture. Limited stock drop."
+    }
+  ],
+  "presets": [
+    {
+      "name": "GenZ Neon Promo Banner"
+    }
+  ]
+}
+{% endschema %}
+
+

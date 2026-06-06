@@ -1,0 +1,325 @@
+{%- style -%}
+  .cyber-feature-banner-{{ section.id }} {
+    /* Height dynamic handling from settings */
+    min-height: {{ section.settings.banner_section_height }}px;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px 0;
+    background-color: {{ section.settings.bg_color | default: '#0d0d11' }};
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Full Width Matrix Fix */
+  .banner-container-{{ section.id }} {
+    width: 100%;
+    {% if section.settings.make_full_width %}
+      max-width: none;
+      padding: 0 60px;
+    {% else %}
+      max-width: {{ section.settings.container_width }}px;
+      padding: 0 40px;
+    {% endif %}
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+  }
+
+  .banner-text-side-{{ section.id }} {
+    flex: 1;
+    max-width: 550px;
+    z-index: 3;
+  }
+
+  .banner-text-side-{{ section.id }} .tag-3d {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: {{ section.settings.accent_color | default: '#00ffcc' }};
+    font-family: 'Arial Black', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    border-radius: 30px;
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
+  }
+
+  .banner-text-side-{{ section.id }} h2 {
+    font-family: 'Arial Black', -apple-system, sans-serif;
+    font-size: {{ section.settings.heading_size }}rem;
+    font-weight: 900;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    margin: 0 0 25px 0;
+    color: #ffffff;
+  }
+
+  .banner-text-side-{{ section.id }} p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #a1a1a6;
+    margin: 0 0 40px 0;
+    font-weight: 500;
+  }
+
+  .action-btn-3d-{{ section.id }} {
+    display: inline-block;
+    padding: 18px 45px;
+    background: #ffffff;
+    color: #000000;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                box-shadow 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .action-btn-3d-{{ section.id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.25);
+    background: {{ section.settings.accent_color | default: '#00ffcc' }};
+  }
+
+  .banner-visual-side-{{ section.id }} {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+  }
+
+  @keyframes floating3D {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+
+  .image-wrapper-3d {
+    position: relative;
+    z-index: 2;
+    animation: floating3D 5s ease-in-out infinite;
+    transition: transform 0.4s ease;
+  }
+
+  .image-wrapper-3d img {
+    max-width: 100%;
+    max-height: 450px;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
+  }
+
+  .shadow-stage-3d {
+    position: absolute;
+    bottom: -10px;
+    width: 60%;
+    height: 25px;
+    background: radial-gradient(ellipse at center, {{ section.settings.accent_color | default: '#00ffcc' }} 0%, rgba(0,0,0,0) 70%);
+    opacity: 0.35;
+    border-radius: 50%;
+    z-index: 1;
+    filter: blur(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .cyber-feature-banner-{{ section.id }}:hover .image-wrapper-3d {
+    transform: scale(1.03) translateY(-10px);
+  }
+
+  .cyber-feature-banner-{{ section.id }}:hover .shadow-stage-3d {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+
+  .ambient-glow-{{ section.id }} {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    transform: translateY(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 255, 204, 0.08) 0%, rgba(0,0,0,0) 70%);
+    z-index: 0;
+    pointer-events: none;
+  }
+{%- endstyle -%}
+
+<section class="cyber-feature-banner-{{ section.id }}">
+  <div class="ambient-glow-{{ section.id }}" style="background: radial-gradient(circle, {{ section.settings.accent_color | color_modify: 'alpha', 0.06 }} 0%, rgba(0,0,0,0) 70%);"></div>
+  
+  <div class="banner-container-{{ section.id }}">
+    
+    <div class="banner-text-side-{{ section.id }}">
+      {% if section.settings.tag_text != blank %}
+        <span class="tag-3d">{{ section.settings.tag_text }}</span>
+      {% endif %}
+
+      {% if section.settings.title != blank %}
+        <h2>{{ section.settings.title }}</h2>
+      {% endif %}
+
+      {% if section.settings.subtext != blank %}
+        <p>{{ section.settings.subtext }}</p>
+      {% endif %}
+
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="action-btn-3d-{{ section.id }}">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="banner-visual-side-{{ section.id }}">
+      <div class="image-wrapper-3d">
+        {% if section.settings.image != blank %}
+          <img src="{{ section.settings.image | img_url: '800x800' }}" alt="{{ section.settings.title }}">
+        {% else %}
+          {{ 'product-apparel-1' | placeholder_svg_tag }}
+        {% endif %}
+      </div>
+      <div class="shadow-stage-3d"></div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "GenZ 3D Feature Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Controls"
+    },
+    {
+      "type": "checkbox",
+      "id": "make_full_width",
+      "label": "Enable Full Width Banner",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "banner_section_height",
+      "min": 400,
+      "max": 900,
+      "step": 50,
+      "label": "Banner Section Height (px)",
+      "default": 650
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 1100,
+      "max": 1600,
+      "step": 50,
+      "label": "Boxed Container Width (If full width disabled)",
+      "default": 1300
+    },
+    {
+      "type": "header",
+      "content": "Typography Architecture"
+    },
+    {
+      "type": "text",
+      "id": "tag_text",
+      "label": "Mini Capsule Tag",
+      "default": "PREMIUM TECHWEAR EDITION"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main Big Heading",
+      "default": "THE FUTURE ON YOUR WRIST."
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2,
+      "max": 6,
+      "step": 0.2,
+      "label": "Heading Font Size (rem)",
+      "default": 4.2
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext Paragraph",
+      "default": "Engineered with water-resistant carbon fiber weave and interactive OLED arrays. Experience premium minimalist industrial design."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "EXPLORE DROP ➔"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "3D Floating Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Transparent Product Image (PNG)"
+    },
+    {
+      "type": "header",
+      "content": "Luxury Palette Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background Color",
+      "default": "#0b0b0e"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "3D Neon Ambient Glow Color",
+      "default": "#00ffcc"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "GenZ 3D Feature Banner"
+    }
+  ]
+}
+{% endschema %}

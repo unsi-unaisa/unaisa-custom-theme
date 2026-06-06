@@ -1,0 +1,473 @@
+/** Critical CSS for the theme. This file is included on every page. */
+
+/* Reset styles inspired by https://www.joshwcomeau.com/css/custom-css-reset/ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  min-height: 100svh;
+}
+
+html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
+  overflow: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  border-radius: var(--style-border-radius-inputs);
+}
+
+select {
+  background-color: var(--color-background);
+  color: currentcolor;
+}
+
+dialog {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+p {
+  text-wrap: pretty;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p:empty {
+  display: none;
+}
+
+:is(p, h1, h2, h3, h4, h5, h6):first-child,
+:empty:first-child + :where(p, h1, h2, h3, h4, h5, h6) {
+  margin-block-start: 0;
+}
+
+:is(p, h1, h2, h3, h4, h5, h6):last-child,
+:where(p, h1, h2, h3, h4, h5, h6) + :has(+ :empty:last-child) {
+  margin-block-end: 0;
+}
+
+/** Theme styles below */
+body {
+  font-family: var(--font-primary--family);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/** Section layout utilities */
+
+/**
+ * Setup a grid that enables both full-width and constrained layouts
+ * depending on the class of the child elements.
+ *
+ * By default, a minimum content margin is set on the left and right
+ * sides of the section and the content is centered in the viewport to
+ * not exceed the maximum page width.
+ *
+ * When a child element is given the `full-width` class, it will span
+ * the entire viewport.
+ */
+.shopify-section {
+  --content-width: min(
+    calc(var(--page-width) - var(--page-margin) * 2),
+    calc(100% - var(--page-margin) * 2)
+  );
+  --content-margin: minmax(var(--page-margin), 1fr);
+  --content-grid: var(--content-margin) var(--content-width) var(--content-margin);
+
+  /* This is required to make <img> elements work as background images */
+  position: relative;
+  grid-template-columns: var(--content-grid);
+  display: grid;
+  width: 100%;
+}
+
+/* Child elements, by default, are constrained to the central column of the grid. */
+.shopify-section > * {
+  grid-column: 2;
+}
+
+/* Child elements that use the full-width utility class span the entire viewport. */
+.shopify-section > .full-width {
+  grid-column: 1 / -1;
+}
+/* critical.css ഫയലിന്റെ ഏറ്റവും താഴെ പഴയതിന് പകരം ഇത് പേസ്റ്റ് ചെയ്യുക */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --accent-color: #0071e3;
+  --header-footer-bg: #f5f5f7; /* ലൈറ്റ് മോഡിലെ ഹെഡർ ബാക്ക്ഗ്രൗണ്ട് */
+}
+
+[data-theme="dark"] {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --accent-color: #00d2ff;
+  --header-footer-bg: #111111; /* ഡാർക്ക് മോഡിലെ ഹെഡർ ബാക്ക്ഗ്രൗണ്ട് */
+}
+
+/* ഹോൾ പേജിനും ബാക്ക്ഗ്രൗണ്ട് സ്മൂത്ത് ആയി മാറാൻ വേണ്ടി */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* ഹെഡറിനും ഫൂട്ടറിനും ഡാർക്ക് മോഡ് അപ്ലൈ ചെയ്യുന്നു */
+header, .header, footer, .footer {
+  background-color: var(--header-footer-bg) !important;
+  color: var(--text-color) !important;
+  transition: all 0.5s ease;
+}
+
+header a, footer a {
+  color: var(--text-color) !important;
+}
+
+/* ഹീറോ ബാനർ സ്റ്റൈൽ */
+.hero-banner {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 140px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-container {
+  max-width: 800px;
+  z-index: 2;
+}
+
+.hero-container h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.hero-container p {
+  font-size: 1.25rem;
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+.btn-premium {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: transform 0.2s, background-color 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.btn-premium:hover {
+  transform: scale(1.05);
+}
+
+
+/* അപ്‌ഗ്രേഡ് ചെയ്ത സിഎസ്എസ് */
+.tabbed-products-section {
+  padding: 80px 20px;
+  background-color: var(--bg-color);
+  transition: background-color 0.5s ease;
+}
+
+.tabbed-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  transition: max-width 0.3s ease;
+}
+
+/* മർച്ചന്റ് Full Width ടിക്ക് ചെയ്താൽ ഇത് വർക്കാകും */
+.tabbed-products-section.full-width .tabbed-container {
+  max-width: 100% !important;
+  padding: 0 40px;
+}
+
+.tab-header {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 20px;
+  position: relative;
+  opacity: 0.5;
+  transition: 0.3s ease;
+}
+
+.tab-btn.active {
+  opacity: 1;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background-color: var(--accent-color);
+}
+
+/* ഡൈനാമിക് അനിമേഷൻ സ്പീഡ് ലോജിക് */
+.tab-content {
+  display: none;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity var(--animation-speed) ease, transform var(--animation-speed) ease;
+}
+
+.tab-content.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-grid {
+  display: grid;
+  gap: 30px;
+}
+
+.product-card {
+  background: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+}
+
+/* പ്രീമിയം ഹോവർ എഫക്ട് */
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent-color);
+}
+
+.product-image-wrapper {
+  background-color: rgba(128, 128, 128, 0.03);
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover .product-image-wrapper img {
+  transform: scale(1.08); /* ഇമേജ് സൂം ഹോവർ എഫക്ട് */
+}
+
+.product-info {
+  padding: 20px;
+  text-align: left;
+}
+
+.product-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.btn-view-product {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-view-product:hover {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.no-products-msg {
+  text-align: center;
+  grid-column: 1 / -1;
+  opacity: 0.6;
+  padding: 40px 0;
+}
+/* Premium Product Page Styling */
+.premium-product-section {
+  padding: 60px 20px;
+  background-color: var(--bg-color);
+  min-height: 80vh;
+}
+
+.product-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .product-wrapper { grid-template-columns: 1fr; gap: 30px; }
+}
+
+.product-media-gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(128, 128, 128, 0.02);
+  border-radius: 24px;
+  padding: 40px;
+}
+
+.main-image-holder img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.product-details-configurator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brand-tag {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.product-details-configurator h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.product-price-display {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid rgba(128, 128, 128, 0.15);
+  margin: 30px 0;
+}
+
+.config-group h3 {
+  font-size: 1rem;
+  opacity: 0.6;
+  margin-bottom: 15px;
+}
+
+.variant-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+/* Apple Style Pill Buttons */
+.swatch-btn {
+  background: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  color: var(--text-color);
+  padding: 14px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.swatch-btn:hover {
+  border-color: var(--text-color);
+}
+
+.swatch-btn.active {
+  border-color: var(--accent-color);
+  background-color: rgba(0, 113, 227, 0.05);
+  box-shadow: 0 0 0 1px var(--accent-color);
+}
+
+.btn-add-to-cart-premium {
+  width: 100%;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 18px;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn-add-to-cart-premium:hover {
+  transform: scale(1.01);
+  opacity: 0.9;
+}
+

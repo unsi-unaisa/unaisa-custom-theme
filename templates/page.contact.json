@@ -1,0 +1,12 @@
+{
+  "name": "Custom Contact Page Layout",
+  "sections": {
+    "main": {
+      "type": "genz-contact-template",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
