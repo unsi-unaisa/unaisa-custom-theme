@@ -29,6 +29,7 @@
         "subtext": "Engineered with water-resistant carbon fiber weave and interactive OLED arrays. Experience premium minimalist industrial design.",
         "button_label": "EXPLORE DROP ➔",
         "button_link": "",
+        "image": "shopify://shop_images/images.jpg",
         "bg_color": "#0b0b0e",
         "accent_color": "#00ffcc",
         "padding_top": 40,
