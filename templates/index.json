@@ -34,10 +34,83 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "genz_collection_matrix_K36NVY": {
+      "type": "genz-collection-matrix",
+      "blocks": {
+        "collection_item_w7NiqQ": {
+          "type": "collection_item",
+          "settings": {
+            "title_text": "SMARTPHONES",
+            "subtext": "from $899*",
+            "collection_url": "",
+            "card_bg": "#fbf1f2",
+            "card_text_color": "#1d1d1f"
+          }
+        },
+        "collection_item_4preTt": {
+          "type": "collection_item",
+          "settings": {
+            "title_text": "TABLETS",
+            "subtext": "from $499*",
+            "collection_url": "",
+            "card_bg": "#fdf7e7",
+            "card_text_color": "#1d1d1f"
+          }
+        },
+        "collection_item_9EQypi": {
+          "type": "collection_item",
+          "settings": {
+            "title_text": "LAPTOPS",
+            "subtext": "from $899*",
+            "collection_url": "",
+            "card_bg": "#f4f7f9",
+            "card_text_color": "#1d1d1f"
+          }
+        },
+        "collection_item_E4fBai": {
+          "type": "collection_item",
+          "settings": {
+            "title_text": "HEADPHONES",
+            "subtext": "from $399*",
+            "collection_url": "",
+            "card_bg": "#f5f5f7",
+            "card_text_color": "#1d1d1f"
+          }
+        },
+        "collection_item_HjKbg6": {
+          "type": "collection_item",
+          "settings": {
+            "title_text": "SMART TV",
+            "subtext": "from $699*",
+            "collection_url": "",
+            "card_bg": "#eef7fa",
+            "card_text_color": "#1d1d1f"
+          }
+        }
+      },
+      "block_order": [
+        "collection_item_w7NiqQ",
+        "collection_item_4preTt",
+        "collection_item_9EQypi",
+        "collection_item_E4fBai",
+        "collection_item_HjKbg6"
+      ],
+      "name": "GenZ Collection Matrix",
+      "settings": {
+        "title": "SHOP BY CATEGORIES",
+        "container_width": 1300,
+        "row_height": 250,
+        "section_bg_color": "#ffffff",
+        "section_text_color": "#1d1d1f",
+        "padding_top": 50,
+        "padding_bottom": 50
+      }
     }
   },
   "order": [
     "main",
-    "genz_3d_feature_banner_QtKqPg"
+    "genz_3d_feature_banner_QtKqPg",
+    "genz_collection_matrix_K36NVY"
   ]
 }
