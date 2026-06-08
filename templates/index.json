@@ -11,10 +11,33 @@
   "sections": {
     "main": {
       "type": "hello-world",
-      "settings": {}
+      "settings": {
+        "heading": "The Future of Tech is Here",
+        "subheading": "Experience the premium collection of smart gadgets crafted for perfection."
+      }
+    },
+    "genz_3d_feature_banner_QtKqPg": {
+      "type": "genz-3d-feature-banner",
+      "name": "GenZ 3D Feature Banner",
+      "settings": {
+        "make_full_width": true,
+        "banner_section_height": 650,
+        "container_width": 1300,
+        "tag_text": "PREMIUM TECHWEAR EDITION",
+        "title": "THE FUTURE ON YOUR WRIST.",
+        "heading_size": 4.2,
+        "subtext": "Engineered with water-resistant carbon fiber weave and interactive OLED arrays. Experience premium minimalist industrial design.",
+        "button_label": "EXPLORE DROP ➔",
+        "button_link": "",
+        "bg_color": "#0b0b0e",
+        "accent_color": "#00ffcc",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "genz_3d_feature_banner_QtKqPg"
   ]
 }
