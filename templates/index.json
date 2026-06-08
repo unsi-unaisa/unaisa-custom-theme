@@ -175,6 +175,23 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "genz_promo_banner_QRPYtc": {
+      "type": "genz-promo-banner",
+      "name": "GenZ Neon Promo Banner",
+      "settings": {
+        "animation_speed": 8,
+        "banner_height": 640,
+        "image": "shopify://shop_images/laptop-coffee.jpg",
+        "image_opacity": 30,
+        "button_label": "GET ACCESS NOW",
+        "button_link": "",
+        "btn_style": "solid",
+        "tag_text": "DROP 02 // LAUNCHING",
+        "title": "NEW ARRIVALS UNLOCKED",
+        "heading_size": 5,
+        "subtext": "Step into the next layer of street apparel architecture. Limited stock drop."
+      }
     }
   },
   "order": [
@@ -182,6 +199,7 @@
     "genz_3d_feature_banner_QtKqPg",
     "genz_collection_matrix_K36NVY",
     "genz_features_showcase_34GQGq",
-    "genz_promo_slider_kixV6L"
+    "genz_promo_slider_kixV6L",
+    "genz_promo_banner_QRPYtc"
   ]
 }
