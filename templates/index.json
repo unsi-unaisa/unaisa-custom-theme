@@ -106,11 +106,63 @@
         "padding_top": 50,
         "padding_bottom": 50
       }
+    },
+    "genz_features_showcase_34GQGq": {
+      "type": "genz-features-showcase",
+      "blocks": {
+        "feature_block_krecqy": {
+          "type": "feature_block",
+          "settings": {
+            "title": "Free Standard Delivery",
+            "subtext": "Metus tellus multricies a quam sit amet lorem diam libero de cosmopolis."
+          }
+        },
+        "feature_block_mqUXeK": {
+          "type": "feature_block",
+          "settings": {
+            "title": "Secure Shopping",
+            "subtext": "Metus tellus multricies a quam sit amet lorem diam libero de cosmopolis."
+          }
+        },
+        "feature_block_jT4DV7": {
+          "type": "feature_block",
+          "settings": {
+            "title": "Shop With Confidence",
+            "subtext": "Metus tellus multricies a quam sit amet lorem diam libero de cosmopolis."
+          }
+        },
+        "feature_block_iHmG6B": {
+          "type": "feature_block",
+          "settings": {
+            "title": "24/7 Help Center",
+            "subtext": "Metus tellus multricies a quam sit amet lorem diam libero de cosmopolis."
+          }
+        }
+      },
+      "block_order": [
+        "feature_block_krecqy",
+        "feature_block_mqUXeK",
+        "feature_block_jT4DV7",
+        "feature_block_iHmG6B"
+      ],
+      "name": "GenZ Features Showcase",
+      "settings": {
+        "container_width": 1350,
+        "icon_size": 45,
+        "bg_color": "#ffffff",
+        "border_color": "#e5e5e5",
+        "icon_color": "#111111",
+        "title_color": "#111111",
+        "text_color": "#666666",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
     }
   },
   "order": [
     "main",
     "genz_3d_feature_banner_QtKqPg",
-    "genz_collection_matrix_K36NVY"
+    "genz_collection_matrix_K36NVY",
+    "genz_features_showcase_34GQGq"
   ]
 }
