@@ -243,6 +243,62 @@
         "padding_top": 60,
         "padding_bottom": 40
       }
+    },
+    "genz_ticker_slider_ht4Vjf": {
+      "type": "genz-ticker-slider",
+      "blocks": {
+        "ticker_item_RyimCr": {
+          "type": "ticker_item",
+          "settings": {
+            "icon_select": "fire",
+            "ticker_text": "NEW ARRIVALS",
+            "use_outline": false
+          }
+        },
+        "ticker_item_Lr4m6M": {
+          "type": "ticker_item",
+          "settings": {
+            "icon_select": "lightning",
+            "ticker_text": "50% OFF",
+            "use_outline": true
+          }
+        },
+        "ticker_item_eV4NEa": {
+          "type": "ticker_item",
+          "settings": {
+            "icon_select": "star",
+            "ticker_text": "LIMITED EDITION",
+            "use_outline": false
+          }
+        },
+        "ticker_item_ccjqgb": {
+          "type": "ticker_item",
+          "settings": {
+            "icon_select": "diamond",
+            "ticker_text": "FUTURE STYLES",
+            "use_outline": true
+          }
+        }
+      },
+      "block_order": [
+        "ticker_item_RyimCr",
+        "ticker_item_Lr4m6M",
+        "ticker_item_eV4NEa",
+        "ticker_item_ccjqgb"
+      ],
+      "name": "GenZ Premium Ticker",
+      "settings": {
+        "speed": 15,
+        "direction": "normal",
+        "pause_on_hover": true,
+        "font_size": 4,
+        "show_dots": false,
+        "bg_color": "#1d1d1f",
+        "text_color": "#ffffff",
+        "accent_color": "#ff007f",
+        "padding_top": 25,
+        "padding_bottom": 25
+      }
     }
   },
   "order": [
@@ -252,6 +308,7 @@
     "genz_features_showcase_34GQGq",
     "genz_promo_slider_kixV6L",
     "genz_promo_banner_QRPYtc",
-    "genz_custom_footer_exqQck"
+    "genz_custom_footer_exqQck",
+    "genz_ticker_slider_ht4Vjf"
   ]
 }
