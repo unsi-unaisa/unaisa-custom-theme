@@ -192,6 +192,57 @@
         "heading_size": 5,
         "subtext": "Step into the next layer of street apparel architecture. Limited stock drop."
       }
+    },
+    "genz_custom_footer_exqQck": {
+      "type": "genz-custom-footer",
+      "blocks": {
+        "about_info_6x6Ljr": {
+          "type": "about_info",
+          "settings": {
+            "heading": "Our Location",
+            "text": "<p>Premium electronics dealer supplying top-tier interactive displays, minimalist kitchen components, and durable tech accessories globally.</p>"
+          }
+        },
+        "link_list_P7A6Ef": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop Links",
+            "menu": ""
+          }
+        },
+        "link_list_GCkKdC": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Customer Service",
+            "menu": ""
+          }
+        },
+        "newsletter_CxMXVx": {
+          "type": "newsletter",
+          "settings": {
+            "heading": "SIGN UP FOR OUR NEWSLETTER",
+            "subtext": "Receive our latest updates about our products & promotions."
+          }
+        }
+      },
+      "block_order": [
+        "about_info_6x6Ljr",
+        "link_list_P7A6Ef",
+        "link_list_GCkKdC",
+        "newsletter_CxMXVx"
+      ],
+      "name": "GenZ Premium Footer",
+      "settings": {
+        "container_width": 1350,
+        "footer_bg": "#ffffff",
+        "footer_title_color": "#111111",
+        "footer_text_color": "#666666",
+        "border_color": "#e5e5e5",
+        "copyright_text": "All Rights Reserved.",
+        "show_payment_icons": true,
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -200,6 +251,7 @@
     "genz_collection_matrix_K36NVY",
     "genz_features_showcase_34GQGq",
     "genz_promo_slider_kixV6L",
-    "genz_promo_banner_QRPYtc"
+    "genz_promo_banner_QRPYtc",
+    "genz_custom_footer_exqQck"
   ]
 }
