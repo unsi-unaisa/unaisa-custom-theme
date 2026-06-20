@@ -299,6 +299,75 @@
         "padding_top": 60,
         "padding_bottom": 40
       }
+    },
+    "genz_bento_grid_AkRkej": {
+      "type": "genz-bento-grid",
+      "blocks": {
+        "bento_card_gU8PpL": {
+          "type": "bento_card",
+          "settings": {
+            "card_bg_color": "#1d1d1f",
+            "card_text_color": "#ffffff",
+            "card_tag": "FLAGSHIP",
+            "card_title": "Lumina Cyber Watch",
+            "card_subtext": "The matrix on your wrist. Hyper-monitored.",
+            "card_link_text": "Explore",
+            "card_link_url": ""
+          }
+        },
+        "bento_card_zFHCeq": {
+          "type": "bento_card",
+          "settings": {
+            "card_bg_color": "#e3e3e5",
+            "card_text_color": "#1d1d1f",
+            "card_tag": "PHILOSOPHY",
+            "card_title": "\"Chaos under control.\"",
+            "card_subtext": "The matrix on your wrist. Hyper-monitored.",
+            "card_link_text": "Explore",
+            "card_link_url": ""
+          }
+        },
+        "bento_card_WwffBX": {
+          "type": "bento_card",
+          "settings": {
+            "card_bg_color": "#ffffff",
+            "card_text_color": "#1d1d1f",
+            "card_tag": "AUDIO",
+            "card_title": "Zest Pods Pro X",
+            "card_subtext": "The matrix on your wrist. Hyper-monitored.",
+            "card_link_text": "Explore",
+            "card_link_url": ""
+          }
+        },
+        "bento_card_YYfaty": {
+          "type": "bento_card",
+          "settings": {
+            "card_bg_color": "#0071e3",
+            "card_text_color": "#ffffff",
+            "card_tag": "ECOSYSTEM",
+            "card_title": "Volt Charger",
+            "card_subtext": "The matrix on your wrist. Hyper-monitored.",
+            "card_link_text": "Explore",
+            "card_link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "bento_card_gU8PpL",
+        "bento_card_zFHCeq",
+        "bento_card_WwffBX",
+        "bento_card_YYfaty"
+      ],
+      "name": "GenZ Bento Grid",
+      "settings": {
+        "layout_style": "container",
+        "container_width": 1200,
+        "card_row_height": 320,
+        "bg_color": "#ffffff",
+        "text_color": "#1d1d1f",
+        "badge_text": "DROP 01 // LIVE",
+        "section_title": "FUTURE // APPARATUS"
+      }
     }
   },
   "order": [
@@ -309,6 +378,7 @@
     "genz_promo_slider_kixV6L",
     "genz_promo_banner_QRPYtc",
     "genz_ticker_slider_ht4Vjf",
-    "genz_custom_footer_exqQck"
+    "genz_custom_footer_exqQck",
+    "genz_bento_grid_AkRkej"
   ]
 }
